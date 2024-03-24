@@ -1,103 +1,115 @@
-用户设置
+Git config（配置）
+所有的配置文件，其实都保存在本地
 
-git config --global user.name "ZYC"
+git config -l
+查看配置(config)
 
-//有空格时需要引号
+git config --system --list
+查看系统config
+
+git config --global --list
+查看当前用户（global）配置
+
+git config --global user.name "thatsme"
+设置用户名
+用户名中有空格时需要引号
 
 git config --global user.email thatsme@qq.com
+设置邮箱
+如果你传递了--global 选项，Git将总是会使用该信息来处理你在系统中所做的一切操作。
+如果你希望在一个特定的项目中使用不同的名称或e-mail地址，你可以在该项目中运行该命令而不要--global选项。
+总之--global为全局配置，不加为某个项目的特定配置。
 
-初始化
+
+Git init（初始化）
 
 git init
-//此时文件夹中出现  .git 隐藏文件夹
-//初始化默认处于主分支（master）中
+初始化，此时默认处于主分支（master）中
+此时文件夹中出现 .git 隐藏文件夹
 
 echo "文件中要添加的内容" > test001.md
+新建文件并写入内容
 
 git status
-//查看状态
+查看状态
 
 git add test001.md
-//从工作区（unstage状态）添加到缓存区
-
+从工作区（unstage状态）添加到缓存区
 有时会出现
 warning: in the working copy of 'test001.md', LF will be replaced by CRLF the next time Git touches it
-此时文件已成功被add
+此时文件其实已成功被add
 
-git commit 
-//提交
-//回车后会进入vim编辑器
-//git 会生成前面带有#的消息（不可见），删去#即为可见
-//输入 i 插入信息（进入编辑模式）（页面下方出现 INSERT 字样）
-//光标默认处在第一行
-//输完后点击 esc 退出编辑模式
-//输入 :wq 保存并退出 vim编辑器，回到git页面
-//此时页面会提示修改的内容
 
+Git commit（提交）
+
+git commit
+提交
+回车后会进入vim编辑器
+git 会生成前面带有#的消息（不可见），删去#即为可见
+输入 i 插入信息（进入编辑模式）（页面下方出现 INSERT 字样）
+光标默认处在第一行
+输完后点击 esc 退出编辑模式
+输入 :wq 保存并退出 vim编辑器，回到git页面
+此时页面会提示修改的内容
 
 git commit -m "新增的内容"
-//适合简短的提交信息，不需要进入到vim编辑器
+适合简短的提交信息，不需要进入到vim编辑器
 
 git commit -a -m "添加的内容"
-//commit 和 add 可以一起写，直接从工作区到本地版本库
-//还可以更进一步写成
-git commit -am（am合在一起写）
+commit 和 add 可以一起写，直接从工作区到本地版本库
+还可以更进一步写成 git commit -am（am合在一起写）
 
 git log
-//查看提交过的版本
+查看提交过的版本
 
-//忽略文件
-touch .gitignore
-//创建 .gitignore 文件
-//在 .gitignore 文件中填写要忽略的文件.后缀
+
+Git branch（分支）
 
 git branch xindefenzhi
-//创建新的分支
-//不会立即跳转到新的分支
+创建新的分支（但不会立即跳转到新的分支）
 
 git branch
-//查看分支（验证是否创建成功）
-//按 q 退出
+查看分支（验证是否创建成功）
 
 git checkout xindefenzhi
-//切换到新的分支
-//新分支的文件是直接从master主支复制过来的，在新的分支中操作文件（例如删除）不会影响主分支，（只要切换回主分支，所有删除的文件都会回来，除了被手动忽略掉的文件）
+切换到新的分支
+新分支的文件是直接从master主支复制过来的，在新的分支中操作文件（例如删除）不会影响主分支，
+（只要切换回主分支，所有删除的文件都会回来，除了被手动忽略掉的文件）
 
 git branch -d xindefenzhi
-//删除分支
-//此时会提示
+删除分支
+此时会提示
 error: the branch 'xindefenzhi' is not fully merged（完全合并）
 hint: If you are sure you want to delete it, run 'git branch -D xindefenzhi'
 hint: Disable this message with "git config advice.forceDeleteBranch false"
-//确定删除
+
 git branch -D xindefenzhi
+强制删除
 
 git checkout -b xindefenzhi2
-//创建并跳转到新分支
+创建并跳转到新分支
 
 git merge xindefenzhi2
-//把别的分支合并到当前所处的分支上
+把别的分支合并到当前所处的分支上
 
-
-
-
-
-
-
-git clone https...
-//拷贝远程链接
-
-//在拷贝过来的文件夹中打开git
-//此时默认主支名为main
-
+git clone [URL]
+拷贝远程链接
+在拷贝过来的文件夹中打开git，此时默认主支名为main
 
 git remote -v
-//查看本地仓库和远程仓库的联系
-//回车后会显示
-origin  https://github.com/thatsme945/test001.git (fetch)
-origin  https://github.com/thatsme945/test001.git (push)
-//git默认用 origin 表示远程仓库的名字，可在 push 时用来代替URL
+查看本地仓库和远程仓库的联系
+回车后会显示
+origin https://github.com/thatsme945/test001.git (fetch)
+origin https://github.com/thatsme945/test001.git (push)
+git默认用 origin 表示远程仓库的名字，可在 push 时用来代替URL
 
 git push
-//更新到远程仓库
+更新到远程仓库
+忽略文件
+
+touch .gitignore
+创建 .gitignore 文件
+在 .gitignore 文件中填写要忽略的文件.后缀
+
+
 
